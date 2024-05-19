@@ -56,6 +56,11 @@ namespace ClassicByte.Cucumber.Core.UserControl
                 return null;
             }
         }
+
+        public static bool FindUser(string usid)
+        {
+            return false;
+        }
     }
 
     /// <summary>

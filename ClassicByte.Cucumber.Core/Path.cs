@@ -23,7 +23,7 @@ namespace ClassicByte.Cucumber.Core
             Plugins.Create();
         }
 
-        public static DirectoryInfo SystemDir => new DirectoryInfo($"{Environment.GetEnvironmentVariable("CUCUMBERSYSTEMDIR")}");
+        public static DirectoryInfo SystemDir => new DirectoryInfo($"{Environment.GetEnvironmentVariable("CUCUMBERSYSTEMDIR",EnvironmentVariableTarget.User)}");
 
         public static DirectoryInfo SystemConfig => new DirectoryInfo($"{SystemDir.FullName}\\Config");
 

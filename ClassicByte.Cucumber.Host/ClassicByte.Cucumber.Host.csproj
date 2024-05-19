@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4ADFD511-887F-4EA6-A88E-AEFE81A26A4D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>ClassicByte.Cucumber.Host</RootNamespace>
     <AssemblyName>cucumberhost</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -32,16 +32,29 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Device" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassicByte.Cucumber.App.UserManager\ClassicByte.Cucumber.App.UserManager.csproj">
+      <Project>{0f6c5bf9-2332-4eee-b183-a51700d37ef7}</Project>
+      <Name>ClassicByte.Cucumber.App.UserManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClassicByte.Cucumber.Core\ClassicByte.Cucumber.Core.csproj">
       <Project>{b434dc46-c7c8-45c7-aa5c-458350f13a29}</Project>
       <Name>ClassicByte.Cucumber.Core</Name>
