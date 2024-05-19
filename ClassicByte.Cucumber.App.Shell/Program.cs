@@ -18,5 +18,14 @@ namespace ClassicByte.Cucumber.App.Shell
                 var command = Console.ReadLine();
             }
         }
+
+     public static void ParseCommand(String command){
+         string[] c = command.Split();
+         try{
+         
+         }catch(IndexOutOfRangeException){
+         Console.WriteLine("命令语法不正确。");}
+        }
     }
+    public static String GetHelp()
 }
