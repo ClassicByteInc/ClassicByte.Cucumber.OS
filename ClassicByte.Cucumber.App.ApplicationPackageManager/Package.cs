@@ -38,6 +38,8 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
 
         public FileInfo FileInfo { get; set; }
 
+        public String ID { get; set; }
+
         public Package(String path)
         {
             #region 解压到Temp
