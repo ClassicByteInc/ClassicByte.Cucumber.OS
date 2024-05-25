@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using ClassicByte.Cucumber.Core.Exceptions;
 
 ///<remarks></remarks>
 namespace ClassicByte.Cucumber.Core.UserControl
@@ -17,24 +18,6 @@ namespace ClassicByte.Cucumber.Core.UserControl
     {
 
         #region 私有变量
-
-        private static XmlDocument userConfig { get
-            {
-                var xml = new XmlDocument();
-                try
-                {
-                    xml.Load($"{Path.SystemConfig.FullName}\\usrtabel.cfg");
-                    return xml;
-                }
-                catch (FileNotFoundException)
-                {
-                    var users = xml.CreateElement("Users");
-                    xml.AppendChild(users);
-                    xml.Save($"{Path.SystemConfig.FullName}\\usrtabel.cfg");
-                    return xml;
-                }
-            } }
-
         #endregion
 
         public String Name { get; private set; }
@@ -43,23 +26,78 @@ namespace ClassicByte.Cucumber.Core.UserControl
 
         public UserLevel Level { get; private set; }
 
-        public User(String name, String usid)
+        internal User(String usid,string name,UserLevel userLevel)
         {
-
+            USID = usid;
+            Name = name;
+            Level = userLevel;
         }
 
         public static User CurrentUser
         {
             get
             {
-
-                return null;
+                try
+                {
+                    var xml = SystemConfig.UserTable;
+                    var currentUsr = xml.Document.GetElementById("CurrentUser");
+                    var usid = currentUsr.GetAttribute("USID");
+                    return FindUser(usid);
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+                catch (Exception e)
+                {
+                    throw new Error(e.Message,e.Message);
+                }
             }
         }
 
-        public static bool FindUser(string usid)
+        public static User FindUser(string usid)
         {
-            return false;
+            var usrList = new List<String>();
+            var usrs = SystemConfig.UserTable.Document.GetElementsByTagName("User");
+            for (int i = 0; i < usrs.Count; i++)
+            {
+                usrList[i] = usrs[i].Attributes["USID"].Value; 
+            }
+            var target = usrs[usrList.IndexOf(usid)];
+            var name = target.Attributes["Name"].Value;
+            var usrid = target.Attributes["USID"].Value;
+            UserLevel userLevel;
+            switch (target.Attributes["LEVEL"].Value)
+            {
+                case "USER":
+                    userLevel = UserLevel.USER; break;
+                case "OWNER":
+                    userLevel = UserLevel.OWNER; break;
+                default:
+                    throw new Exception($"未知的级别：{target.Attributes["LEVEL"].Value}");
+            }
+            return new User(usid,name,userLevel);
+        }
+
+        public void Login(String usid, String pwd) { }
+
+        public void Logout() { }
+
+        public void Reg(String usid ,String pwd,UserLevel userLevel = UserLevel.USER) {
+
+            var xml = SystemConfig.UserTable;
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="UserAuthorizationException"></exception>
+        public void CheckLevel()
+        {
+            if (CurrentUser.Level != UserLevel.OWNER)
+            {
+                throw new UserAuthorizationException("你没有权限完成此操作:\n\t新建用户\n该操作需要提升权限.");
+            }
         }
     }
 
