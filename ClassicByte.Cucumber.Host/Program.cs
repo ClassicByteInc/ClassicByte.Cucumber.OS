@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Device.Location;
 using ClassicByte.Cucumber.Core.Exceptions;
 
 namespace ClassicByte.Cucumber.Host
@@ -81,7 +75,7 @@ namespace ClassicByte.Cucumber.Host
                         //return;
                         break;
                     default:
-                        break;
+                        throw new Error("未成功登录","USER_MANAGER_FAILD");
                 }
                 #endregion
 
@@ -98,7 +92,8 @@ namespace ClassicByte.Cucumber.Host
             }
             catch (Error error)
             {
-                Console.WriteLine($"Cucumber 遇到致命错误,现在正在收集信息...\n\n\n错误代码:{error.ErrorCode}\n\n位置:{error.Source}");
+                Console.WriteLine($"Cucumber 遇到致命错误'{error.Message}',现在正在收集信息...\n\n\n错误代码:{error.ErrorCode}\n\n位置:{error.Source}");
+                throw;
             }
         }
     }

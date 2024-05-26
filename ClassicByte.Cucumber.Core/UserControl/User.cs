@@ -17,22 +17,34 @@ namespace ClassicByte.Cucumber.Core.UserControl
     public class User
     {
 
-        #region 私有变量
-        #endregion
-
+        /// <summary>
+        /// 用户名称
+        /// </summary>
         public String Name { get; private set; }
 
+        /// <summary>
+        /// 用户的全局唯一标识符
+        /// </summary>
         public String USID { get; private set; }
 
+        /// <summary>
+        /// 用户的等级
+        /// </summary>
         public UserLevel Level { get; private set; }
 
-        internal User(String usid,string name,UserLevel userLevel)
+        public String Password { get; private set; }
+
+        internal User(String usid, string name, UserLevel userLevel,String pwd)
         {
             USID = usid;
             Name = name;
             Level = userLevel;
+            Password = pwd;
         }
 
+        /// <summary>
+        /// 获取当前用户
+        /// </summary>
         public static User CurrentUser
         {
             get
@@ -50,43 +62,77 @@ namespace ClassicByte.Cucumber.Core.UserControl
                 }
                 catch (Exception e)
                 {
-                    throw new Error(e.Message,e.Message);
+                    throw new Error(e.Message, e.Message);
                 }
             }
         }
 
         public static User FindUser(string usid)
         {
-            var usrList = new List<String>();
             var usrs = SystemConfig.UserTable.Document.GetElementsByTagName("User");
+            var usrList = new String[usrs.Count];
             for (int i = 0; i < usrs.Count; i++)
             {
-                usrList[i] = usrs[i].Attributes["USID"].Value; 
+                usrList[i] = usrs[i].Attributes["USID"].Value;
             }
-            var target = usrs[usrList.IndexOf(usid)];
-            var name = target.Attributes["Name"].Value;
+            var index = Array.IndexOf(usrList, usid);
+            var target = usrs[index];
             var usrid = target.Attributes["USID"].Value;
+            var pwd = target.Attributes["Password"].Value;
             UserLevel userLevel;
-            switch (target.Attributes["LEVEL"].Value)
+            switch (target.Attributes["Level"].Value)
             {
                 case "USER":
                     userLevel = UserLevel.USER; break;
                 case "OWNER":
                     userLevel = UserLevel.OWNER; break;
                 default:
-                    throw new Exception($"未知的级别：{target.Attributes["LEVEL"].Value}");
+                    throw new CoreException($"未知的级别：{target.Attributes["LEVEL"].Value}");
             }
-            return new User(usid,name,userLevel);
+            return new User(usid, usid, userLevel,pwd);
         }
 
-        public void Login(String usid, String pwd) { }
+        public static bool Login(String usid, String pwd)
+        {
+            //找到用户
+            var usr = User.FindUser(usid);
 
-        public void Logout() { }
+            if (pwd!=usr.Password)
+            {
+                throw new LogonFailureException("密码错误。");
+            }
 
-        public void Reg(String usid ,String pwd,UserLevel userLevel = UserLevel.USER) {
+            //保存到CurrentUSer
+            var userTable = SystemConfig.UserTable.Document;
+            var root = userTable.DocumentElement;
+            var currentUser = userTable.CreateElement("CurrentUser");
+            currentUser.SetAttribute("USID",usr.USID);
+            root.AppendChild(currentUser);
+            userTable.AppendChild(root);
+            SystemConfig.UserTable.Save(userTable);
+            return true;
+        }
 
+        public static void Logout() { }
+
+        public static void Reg(String usid, String pwd, UserLevel userLevel = UserLevel.USER)
+        {
+
+            if (!File.Exists($"{Path.SystemConfigDir}\\{SystemConfig.USRCFG_NAME}"))
+            {
+                File.Create($"{Path.SystemConfigDir}\\{SystemConfig.USRCFG_NAME}").Close();
+            }
             var xml = SystemConfig.UserTable;
+            var root = xml.Document;
+            var docroot = root.DocumentElement;
+            var newusr = root.CreateElement("User");
+            newusr.SetAttribute("USID", usid);
+            newusr.SetAttribute("Password", pwd);
+            newusr.SetAttribute("Level", userLevel.ToString());
+            docroot.AppendChild(newusr);
+            root.AppendChild(docroot);
 
+            SystemConfig.UserTable.Save(root);
         }
         /// <summary>
         /// 

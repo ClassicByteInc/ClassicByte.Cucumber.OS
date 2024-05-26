@@ -9,7 +9,7 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
     public class Package
     {
         public const String PKGINFONAME = "__PKGINFO__.__INFO";
-        public static FileInfo PackageInfoFile => new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfig.FullName}\\pkgs.cfg");
+        public static FileInfo PackageInfoFile => new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir.FullName}\\pkgs.cfg");
         public static XmlDocument PackageInfo
         {
             get
@@ -70,7 +70,7 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
             catch (NullReferenceException nre)
             {
 
-                throw new InstallException("包已损坏。",nre);
+                throw new InstallException("包已损坏。", nre);
             }
         }
 

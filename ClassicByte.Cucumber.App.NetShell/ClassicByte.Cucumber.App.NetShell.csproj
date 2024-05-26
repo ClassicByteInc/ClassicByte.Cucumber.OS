@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\SYSTEM\CORE\</OutputPath>
+    <OutputPath>U:\SYSTEM\CORE\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,6 +37,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ClassicByte.Library.Standard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassicByte.Library.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassicByte.Standard, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

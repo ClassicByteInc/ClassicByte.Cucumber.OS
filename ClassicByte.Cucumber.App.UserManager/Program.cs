@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Xml;
+using ClassicByte.Cucumber.Core;
 using ClassicByte.Cucumber.Core.Exceptions;
+using ClassicByte.Cucumber.Core.UserControl;
 
 namespace ClassicByte.Cucumber.App.UserManager
 {
@@ -11,7 +11,7 @@ namespace ClassicByte.Cucumber.App.UserManager
     {
         public static void Main(String[] args)
         {
-            try
+        start: try
             {
                 if (args.Length > 0)
                 {
@@ -28,6 +28,40 @@ namespace ClassicByte.Cucumber.App.UserManager
                             //var password = Console.ReadLine();
 
                             //Environment.Exit((Int32)LoginStatus.SUCCESS);
+
+                            XmlNodeList usrs;
+                            try
+                            {
+                                if (!File.Exists($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir}\\{SystemConfig.USRCFG_NAME}"))
+                                {
+                                    throw new TypeInitializationException("UserTable", new NullReferenceException());
+                                }
+                                usrs = SystemConfig.UserTable.Document.GetElementsByTagName("User");
+                                var usrList = new String[usrs.Count];
+                                if (usrs.Count == 0)
+                                {
+                                    throw new TypeInitializationException("UserTable", new NullReferenceException());
+                                }
+                                for (int i = 0; i < usrs.Count; i++)
+                                {
+                                    usrList[i] = usrs[i].Attributes["USID"].InnerText;
+                                }
+                                Console.Write("输入用户名:");
+                                var usrname = Console.ReadLine();
+                                Console.Write("输入密码:");
+                                var pwd = Console.ReadLine();
+                                if (User.Login(usrname, pwd))
+                                {
+                                    Environment.Exit((int)LoginStatus.SUCCESS);
+                                }
+                            }
+                            catch (TypeInitializationException)
+                            {
+                                Console.WriteLine("没有用户,需要注册一个新用户.");
+                                Reg();
+                                goto start;
+                            }
+
                             break;
                         default:
                             break;
@@ -46,14 +80,35 @@ namespace ClassicByte.Cucumber.App.UserManager
             catch (Error error)
             {
                 Console.WriteLine($"Cucumber 遇到致命错误,现在正在收集信息...\n\n\n错误代码:{error.ErrorCode}\n\n位置:{error.Source}");
+                throw;
             }
+        }
+
+        internal static void Reg()
+        {
+        l1: Console.Write("输入新的用户名:");
+            var usid = Console.ReadLine();
+            if ((usid == "") || (usid == null))
+            {
+                Console.WriteLine("用户名不可为空.");
+                goto l1;
+            }
+        l2: Console.Write($"输入{usid}的密码:");
+            var pwd = Console.ReadLine();
+            if ((pwd == "") || (pwd == null))
+            {
+                Console.WriteLine("密码不可为空.");
+                goto l2;
+            }
+            Console.WriteLine($"注册新用户...");
+            User.Reg(usid, pwd, UserLevel.OWNER);
         }
 
     }
     [Flags]
     public enum LoginStatus
     {
-        SUCCESS = 0xaa,NOUSER = 0xed,WRONGPASSWORD = 0xdd,
-        FAILD = NOUSER| WRONGPASSWORD
+        SUCCESS = 0xaa, NOUSER = 0xed, WRONGPASSWORD = 0xdd,
+        FAILD = NOUSER | WRONGPASSWORD
     }
 }
