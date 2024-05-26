@@ -25,19 +25,26 @@ namespace ClassicByte.Cucumber.Core
             {
                 get
                 {
-                    var data = ClassicByte.Library.Util.DataEncoder.AESDecryptString(File.ReadAllText(_fileInfo1.FullName), RunTime.USRCFGKEY);
-                    var xml = new XmlDocument();
-                    xml.LoadXml(data);
-                    return xml;
+                    try
+                    {
+                        var data = ClassicByte.Library.Util.DataEncoder.AESDecryptString(File.ReadAllText(_fileInfo1.FullName), RunTime.USRCFGKEY);
+                        var xml = new XmlDocument();
+                        xml.LoadXml(data);
+                        return xml;
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }
                 }
             }
             /// <summary>
             /// 保存配置文件
             /// </summary>
             /// <returns>结果</returns>
-            public void Save()
+            public void Save(XmlDocument xml)
             {
-                var data = Document.InnerXml;
+                var data = xml.InnerXml;
                 var endata = ClassicByte.Library.Util.DataEncoder.AESEncryptedString(data, RunTime.USRCFGKEY);
                 File.WriteAllText(_fileInfo1.FullName, endata);
             }
@@ -59,7 +66,7 @@ namespace ClassicByte.Cucumber.Core
         /// 用户配置文件对象
         /// </summary>
         /// 
-        public static Config UserTable => new Config(new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfig.FullName}\\{USRCFG_NAME}"));
+        public static Config UserTable => new Config(new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir.FullName}\\{USRCFG_NAME}"));
 
         #endregion
     }

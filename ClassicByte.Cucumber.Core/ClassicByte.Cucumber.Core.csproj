@@ -18,10 +18,14 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\SYSTEM\CORE\</OutputPath>
+    <OutputPath>U:\SYSTEM\CORE\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,7 +51,9 @@
   <ItemGroup>
     <Compile Include="Exceptions\Error.cs" />
     <Compile Include="Exceptions\CoreException.cs" />
+    <Compile Include="Exceptions\LogonFailureException.cs" />
     <Compile Include="Exceptions\UserAuthorizationException.cs" />
+    <Compile Include="Exceptions\UserException.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="RunTime.cs" />
     <Compile Include="SystemConfig.cs" />

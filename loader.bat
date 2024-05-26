@@ -1,1 +1,0 @@
-start testsysdsk.vhdx

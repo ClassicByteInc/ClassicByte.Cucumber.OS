@@ -8,31 +8,35 @@ using System.Threading.Tasks;
 
 namespace ClassicByte.Cucumber.Core
 {
-    public static class Path
+    public class Path
     {
 
         static readonly String SystemDirName = "CUCUMBERSYSTEMDIR";
 
         static Path()
         {
-            if ((Environment.GetEnvironmentVariable(SystemDirName)==null)||(Environment.GetEnvironmentVariable(SystemDirName)==String.Empty))
+            if (!(Environment.GetEnvironmentVariable(SystemDirName) == null) || !(Environment.GetEnvironmentVariable(SystemDirName) == String.Empty))
             {
-                Environment.SetEnvironmentVariable("CUCUMBERSYSTEMDIR", $"{new FileInfo(Process.GetCurrentProcess().MainModule.FileName).Directory.Parent.FullName}",EnvironmentVariableTarget.User);
+                Environment.SetEnvironmentVariable("CUCUMBERSYSTEMDIR", $"{new FileInfo(Process.GetCurrentProcess().MainModule.FileName).Directory.Parent.FullName}", EnvironmentVariableTarget.User);
             }
 
             Plugins.Create();
         }
 
-        public static DirectoryInfo SystemDir => new DirectoryInfo($"{Environment.GetEnvironmentVariable("CUCUMBERSYSTEMDIR",EnvironmentVariableTarget.User)}");
+        public static DirectoryInfo SystemDir => new DirectoryInfo($"{Environment.GetEnvironmentVariable("CUCUMBERSYSTEMDIR", EnvironmentVariableTarget.User)}");
 
-        public static DirectoryInfo SystemConfig => new DirectoryInfo($"{SystemDir.FullName}\\Config");
+        public static DirectoryInfo SystemConfigDir => new DirectoryInfo($"{SystemDir.FullName}\\Config");
 
         public static DirectoryInfo SystemCoreDir => new DirectoryInfo($"{SystemDir.FullName}\\Core");
 
         public static DirectoryInfo Plugins => new DirectoryInfo($"{SystemDir.FullName}\\plugins");
 
-        public static DirectoryInfo Temp { get {
+        public static DirectoryInfo Temp
+        {
+            get
+            {
                 return Directory.CreateDirectory($"{SystemDir.FullName}\\Temp");
-            } }
+            }
+        }
     }
 }
