@@ -52,5 +52,11 @@
       <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassicByte.Cucumber.Core\ClassicByte.Cucumber.Core.csproj">
+      <Project>{b434dc46-c7c8-45c7-aa5c-458350f13a29}</Project>
+      <Name>ClassicByte.Cucumber.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

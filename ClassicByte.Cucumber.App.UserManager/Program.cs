@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows;
 using System.Xml;
 using ClassicByte.Cucumber.Core;
 using ClassicByte.Cucumber.Core.Exceptions;
@@ -55,15 +56,25 @@ namespace ClassicByte.Cucumber.App.UserManager
                                     Environment.Exit((int)LoginStatus.SUCCESS);
                                 }
                             }
+                            catch (UserException ue)
+                            {
+                                Console.WriteLine(ue.Message);goto start;
+                            }
                             catch (TypeInitializationException)
                             {
                                 Console.WriteLine("没有用户,需要注册一个新用户.");
                                 Reg();
                                 goto start;
                             }
+                            catch (Exception ee)
+                            {
+                                throw new Error(ee.Message,ee);
+                            }
 
                             break;
+
                         default:
+
                             break;
                     }
                 }
@@ -73,13 +84,16 @@ namespace ClassicByte.Cucumber.App.UserManager
                     {
                         Console.Write("UM>");
                         var command = Console.ReadLine();
+                        var cms = command.Split(' ');
+                        args = cms;
+                        goto start;
                     }
                 }
 
             }
             catch (Error error)
             {
-                Console.WriteLine($"Cucumber 遇到致命错误,现在正在收集信息...\n\n\n错误代码:{error.ErrorCode}\n\n位置:{error.Source}");
+                error.Print();
                 throw;
             }
         }

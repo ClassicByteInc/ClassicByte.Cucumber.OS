@@ -46,9 +46,22 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ClassicByte.Library.Standard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassicByte.Library.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassicByte.Standard, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Device" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicByte.Cucumber.App.UserManager\ClassicByte.Cucumber.App.UserManager.csproj">

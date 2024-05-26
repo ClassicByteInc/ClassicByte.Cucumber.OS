@@ -5,7 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using ClassicByte.Cucumber.Core.Exceptions;
 
 ///<remarks></remarks>
@@ -34,7 +37,7 @@ namespace ClassicByte.Cucumber.Core.UserControl
 
         public String Password { get; private set; }
 
-        internal User(String usid, string name, UserLevel userLevel,String pwd)
+        internal User(String usid, string name, UserLevel userLevel, String pwd)
         {
             USID = usid;
             Name = name;
@@ -50,15 +53,30 @@ namespace ClassicByte.Cucumber.Core.UserControl
             get
             {
                 try
+                
                 {
+                    
                     var xml = SystemConfig.UserTable;
-                    var currentUsr = xml.Document.GetElementById("CurrentUser");
-                    var usid = currentUsr.GetAttribute("USID");
-                    return FindUser(usid);
+                    var xmld = XDocument.Parse(xml.Document.InnerXml);
+                    try
+                    {
+                        var usid = xmld.XPathSelectElement("UserTable/CurrentUser").Attribute("USID").Value;
+                        return FindUser(usid);
+
+                    }
+                    catch (NullReferenceException)
+                    {
+                        throw new UserException("当前没有登录用户.") ;
+                    }                    
+                    
                 }
                 catch (NullReferenceException)
                 {
                     return null;
+                }
+                catch (UserException)
+                {
+                    throw;
                 }
                 catch (Exception e)
                 {
@@ -77,7 +95,15 @@ namespace ClassicByte.Cucumber.Core.UserControl
             }
             var index = Array.IndexOf(usrList, usid);
             var target = usrs[index];
-            var usrid = target.Attributes["USID"].Value;
+            String usrid;
+            try
+            {
+                usrid = target.Attributes["USID"].Value;
+            }
+            catch (NullReferenceException nre)
+            {
+                throw new UserException("没有此用户",nre);
+            }
             var pwd = target.Attributes["Password"].Value;
             UserLevel userLevel;
             switch (target.Attributes["Level"].Value)
@@ -89,15 +115,27 @@ namespace ClassicByte.Cucumber.Core.UserControl
                 default:
                     throw new CoreException($"未知的级别：{target.Attributes["LEVEL"].Value}");
             }
-            return new User(usid, usid, userLevel,pwd);
+            return new User(usid, usid, userLevel, pwd);
         }
 
         public static bool Login(String usid, String pwd)
         {
             //找到用户
-            var usr = User.FindUser(usid);
+            User usr;
+            try
+            {
+                 usr = User.FindUser(usid);
+            }
+            catch (UserException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new Error(e.Message,e);
+            }
 
-            if (pwd!=usr.Password)
+            if (pwd != usr.Password)
             {
                 throw new LogonFailureException("密码错误。");
             }
@@ -106,7 +144,7 @@ namespace ClassicByte.Cucumber.Core.UserControl
             var userTable = SystemConfig.UserTable.Document;
             var root = userTable.DocumentElement;
             var currentUser = userTable.CreateElement("CurrentUser");
-            currentUser.SetAttribute("USID",usr.USID);
+            currentUser.SetAttribute("USID", usr.USID);
             root.AppendChild(currentUser);
             userTable.AppendChild(root);
             SystemConfig.UserTable.Save(userTable);

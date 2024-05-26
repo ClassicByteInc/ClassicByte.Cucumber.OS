@@ -39,6 +39,7 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

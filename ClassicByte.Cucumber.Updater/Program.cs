@@ -19,8 +19,7 @@ namespace ClassicByte.Cucumber.Updater
             }
             catch (ClassicByte.Cucumber.Core.Exceptions.Error error)
             {
-                Console.WriteLine($"Cucumber 遇到致命错误,现在正在收集信息...\n\n\n错误代码:{error.ErrorCode}\n\n位置:{error.Source}");
-                throw;
+                error.Print(); throw;
             }
         }
     }

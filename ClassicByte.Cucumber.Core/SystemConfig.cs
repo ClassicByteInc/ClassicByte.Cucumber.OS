@@ -34,7 +34,7 @@ namespace ClassicByte.Cucumber.Core
                     }
                     catch (Exception)
                     {
-                        return null;
+                        throw;
                     }
                 }
             }

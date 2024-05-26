@@ -44,5 +44,8 @@
       <Name>ClassicByte.Cucumber.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

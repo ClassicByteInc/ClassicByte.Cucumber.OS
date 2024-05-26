@@ -72,8 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

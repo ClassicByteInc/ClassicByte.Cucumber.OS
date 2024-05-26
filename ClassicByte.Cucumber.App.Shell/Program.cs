@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Windows;
+using ClassicByte.Cucumber.Core.Exceptions;
 
 namespace ClassicByte.Cucumber.App.Shell
 {
@@ -7,14 +9,30 @@ namespace ClassicByte.Cucumber.App.Shell
     {
         public static void Main()
         {
-
-            Console.WriteLine("ClassicByte Cucumber Shell (Managed Windows) v.beta");
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            while (true)
+            try
             {
-                Console.Write($"{/*Core.UserControl.User.CurrentUser.USID*/"huang"}${path}>");
-                var command = Console.ReadLine();
-                ParseCommand(command);
+
+                Console.WriteLine("ClassicByte Cucumber Shell (Managed Windows) v.beta");
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                while (true)
+                {
+                    try
+                    {
+                        Console.Write($"{Core.UserControl.User.CurrentUser.USID}${path}>");
+                    }
+                    catch (UserException)
+                    {
+                        MessageBox.Show("必须登录Cucumber才能使用.", "错误", MessageBoxButton.OK, MessageBoxImage.Hand);
+                        return;
+                    }
+                    var command = Console.ReadLine();
+                    ParseCommand(command);
+                }
+            }
+            catch (Error e)
+            {
+                e.Print();
+                throw;
             }
         }
 

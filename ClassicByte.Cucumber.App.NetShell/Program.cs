@@ -1,4 +1,5 @@
 ﻿using System;
+using ClassicByte.Cucumber.Core.Exceptions;
 
 namespace ClassicByte.Cucumber.App.NetShell
 {
@@ -6,9 +7,15 @@ namespace ClassicByte.Cucumber.App.NetShell
     {
         public static void Main()
         {
-            var sth = Console.ReadLine();
-            Console.WriteLine(ClassicByte.Library.Util.DataEncoder.AESEncryptedString(sth, "CLASSICBYTE_CUC_USR"));
-            Console.ReadKey();
+			try
+			{
+
+			}
+			catch (Error e)
+			{
+				e.Print();
+				throw;
+			}
         }
     }
 }
