@@ -25,6 +25,7 @@ namespace ClassicByte.Cucumber.Host
                     switch (args[0].ToLower())
                     {
                         case "init":
+                            Environment.SetEnvironmentVariable("Path",$"{Environment.GetEnvironmentVariable("Path",EnvironmentVariableTarget.User)};{Core.Path.SystemDir};{Core.Path.SystemCoreDir}",EnvironmentVariableTarget.User);
                             File.WriteAllText($"{Core.Path.SystemConfigDir.FullName}\\{SystemConfig.USRCFG_NAME}", DataEncoder.AESEncryptedString("<UserTable />", "CLASSICBYTE_CUC_USR"));
                             MessageBox.Show("初始化完成.","提示",MessageBoxButton.OK,MessageBoxImage.Information);
                             break;

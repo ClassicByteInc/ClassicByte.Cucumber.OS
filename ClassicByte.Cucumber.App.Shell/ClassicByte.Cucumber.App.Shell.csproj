@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>U:\SYSTEM\CORE\</OutputPath>
+    <OutputPath>..\..\SYSTEM\CORE\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,13 +39,13 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ClassicByte.Cucumber.Core\ClassicByte.Cucumber.Core.csproj">
       <Project>{b434dc46-c7c8-45c7-aa5c-458350f13a29}</Project>
       <Name>ClassicByte.Cucumber.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
