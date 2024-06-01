@@ -132,7 +132,7 @@ namespace ClassicByte.Cucumber.Core.UserControl
             }
             catch (Exception e)
             {
-                throw new Error(e.Message,e);
+                throw new Error(e.Message,e.GetType().FullName,e);
             }
 
             if (pwd != usr.Password)

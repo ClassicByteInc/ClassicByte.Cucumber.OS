@@ -68,7 +68,7 @@ namespace ClassicByte.Cucumber.App.UserManager
                             }
                             catch (Exception ee)
                             {
-                                throw new Error(ee.Message,ee);
+                                throw new Error(ee.Message,ee.GetType().FullName);
                             }
 
                             break;

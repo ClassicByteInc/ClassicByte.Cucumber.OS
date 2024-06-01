@@ -133,6 +133,8 @@ namespace ClassicByte.Cucumber.Host
                 usrdoc.AppendChild(root);
                 usrtabel.Save(usrdoc);
             }
+
+            RunTime.Dispose();
         }
     }
 }
