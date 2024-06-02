@@ -227,9 +227,8 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
                 catch (Exception)
                 {
 
-                    throw;
-                }
-            }
+        }
+    }
 
             root.AppendChild(installItems);
             root.AppendChild(info);
