@@ -68,6 +68,7 @@ namespace ClassicByte.Cucumber.Core
         /// 
         public static Config UserTable => new Config(new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir.FullName}\\{USRCFG_NAME}"));
 
+        public static Config PackageTable => new Config(new FileInfo($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir.FullName}\\{""}"));
         #endregion
     }
 }

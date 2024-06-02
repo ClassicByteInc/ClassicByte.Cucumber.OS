@@ -26,6 +26,9 @@ init    关联包安装程序
                 switch (args[0].ToLower())
                 {
                     case"build":
+                        if (args[3] ==".")
+                        {
+                        }
                         Package.Build(args[1], new System.IO.DirectoryInfo(args[2]),new System.IO.DirectoryInfo(args[3]),new System.IO.FileInfo(args[4]), args[5], args[6]);   
                         break;
                     case "install":
@@ -42,9 +45,9 @@ init    关联包安装程序
             {
                 e.Print();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Error();
+                Console.WriteLine($"[{e.GetType().FullName}]");
             }
         }
     }
