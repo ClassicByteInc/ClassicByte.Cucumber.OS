@@ -243,7 +243,9 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
 
             FileManager.CopyFolder(targetDir.FullName, temp.FullName + "\\Application"); ;
             File.Copy($"{temp}\\{_packagefile}", temp.FullName + "\\Config\\install.xml", true);
-
+            ZipHelper.ZipFileDirectory(temp.FullName, outPut.FullName + $"\\{packageName}.cap", (m) =>
+            {
+            });
             #endregion
 
             return new Package($"{outPut.FullName}\\{_packagefile}");
