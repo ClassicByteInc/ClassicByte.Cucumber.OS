@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.Device" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassicByte.Cucumber.Core\ClassicByte.Cucumber.Core.csproj">
