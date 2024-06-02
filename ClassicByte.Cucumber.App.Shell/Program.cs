@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Device.Location;
 using System.Text;
 using System.Windows;
 using ClassicByte.Cucumber.Core.Exceptions;
 
+
 namespace ClassicByte.Cucumber.App.Shell
 {
-    internal class Program
+    public class Program
     {
         public static void Main()
         {
@@ -46,6 +48,9 @@ namespace ClassicByte.Cucumber.App.Shell
                     case "help":
                         Console.WriteLine(GetHelp());
                         break;
+                    case "gps":
+                        GetPosition();
+                        break;
                     default:
                         break;
                 }
@@ -67,6 +72,12 @@ namespace ClassicByte.Cucumber.App.Shell
             help.AppendLine("=========plugins==========");
 
             return help.ToString();
+        }
+
+        public static void GetPosition()
+        {
+            GeoCoordinate geo = GeoCoordinate.Unknown;
+            Console.WriteLine(geo.ToString());
         }
     }
 

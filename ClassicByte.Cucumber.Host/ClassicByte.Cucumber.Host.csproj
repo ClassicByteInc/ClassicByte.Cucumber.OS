@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4ADFD511-887F-4EA6-A88E-AEFE81A26A4D}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>ClassicByte.Cucumber.Host</RootNamespace>
     <AssemblyName>cucumberhost</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -67,6 +67,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassicByte.Cucumber.App.ApplicationPackageManager\ClassicByte.Cucumber.App.ApplicationPackageManager.csproj">
+      <Project>{bfb6c04f-8560-4134-bc1d-4663debce2d5}</Project>
+      <Name>ClassicByte.Cucumber.App.ApplicationPackageManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClassicByte.Cucumber.App.FileSystemManager\ClassicByte.Cucumber.App.FileSystemManager.csproj">
+      <Project>{a4fcd420-5072-4b76-bfca-f0bf6a33e817}</Project>
+      <Name>ClassicByte.Cucumber.App.FileSystemManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClassicByte.Cucumber.App.NetShell\ClassicByte.Cucumber.App.NetShell.csproj">
+      <Project>{bb13cbff-dca2-47f6-981d-165ff7aa385b}</Project>
+      <Name>ClassicByte.Cucumber.App.NetShell</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClassicByte.Cucumber.App.Shell\ClassicByte.Cucumber.App.Shell.csproj">
+      <Project>{ea86dfa4-7096-45ee-ae11-9542125cb015}</Project>
+      <Name>ClassicByte.Cucumber.App.Shell</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClassicByte.Cucumber.App.UserManager\ClassicByte.Cucumber.App.UserManager.csproj">
       <Project>{0f6c5bf9-2332-4eee-b183-a51700d37ef7}</Project>
       <Name>ClassicByte.Cucumber.App.UserManager</Name>

@@ -69,43 +69,45 @@ namespace ClassicByte.Cucumber.Host
 
                     //登录
                     #region 登录
-                    var um = new Process();
-                    var umstart = new ProcessStartInfo();
-                    umstart.FileName = $"{ClassicByte.Cucumber.Core.Path.SystemCoreDir.FullName}\\um.exe";
-                    umstart.Arguments = "/login";
+                    //var um = new Process();
+                    //var umstart = new ProcessStartInfo();
+                    //umstart.FileName = $"{ClassicByte.Cucumber.Core.Path.SystemCoreDir.FullName}\\um.exe";
+                    //umstart.Arguments = "/login";
 
-                    um.StartInfo = umstart;
-                    um.Start();
+                    //um.StartInfo = umstart;
+                    //um.Start();
 
-                    um.Exited += (s, e) =>
-                    {
+                    //um.Exited += (s, e) =>
+                    //{
 
-                    };
-                    um.WaitForExit();
-                    switch (um.ExitCode)
-                    {
-                        case (int)ClassicByte.Cucumber.App.UserManager.LoginStatus.SUCCESS:
-                            Console.WriteLine("登录成功");
-                            break;
-                        case (int)App.UserManager.LoginStatus.NOUSER:
+                    //};
+                    //um.WaitForExit();
+                    //switch (um.ExitCode)
+                    //{
+                    //    case (int)ClassicByte.Cucumber.App.UserManager.LoginStatus.SUCCESS:
+                    //        Console.WriteLine("登录成功");
+                    //        break;
+                    //    case (int)App.UserManager.LoginStatus.NOUSER:
 
-                            //MessageBox.Show("没有此用户。", "User Control", MessageBoxButton.OK, MessageBoxImage.Hand);
-                            MessageBox.Show("登录到Cucumber失败,原因:\n指定的用户不存在。", "User Control", MessageBoxButton.OK, MessageBoxImage.Hand);
-                            //return;
-                            break;
-                        default:
-                            throw new Error("未成功登录", "USER_MANAGER_FAILD");
-                    }
+                    //        //MessageBox.Show("没有此用户。", "User Control", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    //        MessageBox.Show("登录到Cucumber失败,原因:\n指定的用户不存在。", "User Control", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    //        //return;
+                    //        break;
+                    //    default:
+                    //        throw new Error("未成功登录", "USER_MANAGER_FAILD");
+                    //}
+                    ClassicByte.Cucumber.App.UserManager.Program.Main(new string[] { "/login"});
                     #endregion
 
                     #region 开启cr
-                    var cr = new Process();
-                    var crstart = new ProcessStartInfo();
-                    crstart.FileName = $"{Core.Path.SystemCoreDir}\\csh.exe";
+                    //var cr = new Process();
+                    //var crstart = new ProcessStartInfo();
+                    //crstart.FileName = $"{Core.Path.SystemCoreDir}\\csh.exe";
 
-                    cr.StartInfo = crstart;
-                    cr.Start();
-                    cr.WaitForExit();
+                    //cr.StartInfo = crstart;
+                    //cr.Start();
+                    //cr.WaitForExit();
+                    ClassicByte.Cucumber.App.Shell.Program.Main();
                     #endregion
 
                 }

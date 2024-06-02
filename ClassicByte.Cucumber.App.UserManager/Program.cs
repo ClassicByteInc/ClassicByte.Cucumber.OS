@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows;
 using System.Xml;
 using ClassicByte.Cucumber.Core;
 using ClassicByte.Cucumber.Core.Exceptions;
@@ -8,9 +7,9 @@ using ClassicByte.Cucumber.Core.UserControl;
 
 namespace ClassicByte.Cucumber.App.UserManager
 {
-    internal class Program
+    public class Program
     {
-        public static void Main(String[] args)
+        public static int Main(String[] args)
         {
         start: try
             {
@@ -19,21 +18,10 @@ namespace ClassicByte.Cucumber.App.UserManager
                     switch (args[0].ToLower())
                     {
                         case "/login":
-                            //Console.Write("输入用户名：");
-                            //var username = Console.ReadLine();
-                            //if (ClassicByte.Cucumber.Core.UserControl.User.FindUser(username)==null)
-                            //{
-                            //    Environment.Exit((Int32)LoginStatus.NOUSER);
-                            //}
-                            //Console.Write($"输入'{username}'的密码：");
-                            //var password = Console.ReadLine();
-
-                            //Environment.Exit((Int32)LoginStatus.SUCCESS);
-
                             XmlNodeList usrs;
                             try
                             {
-                                if (!File.Exists($"{ClassicByte.Cucumber.Core.Path.SystemConfigDir}\\{SystemConfig.USRCFG_NAME}"))
+                                if (!File.Exists($"{Core.Path.SystemConfigDir}\\{SystemConfig.USRCFG_NAME}"))
                                 {
                                     throw new TypeInitializationException("UserTable", new NullReferenceException());
                                 }
@@ -46,19 +34,29 @@ namespace ClassicByte.Cucumber.App.UserManager
                                 for (int i = 0; i < usrs.Count; i++)
                                 {
                                     usrList[i] = usrs[i].Attributes["USID"].InnerText;
+
                                 }
+                                Console.WriteLine("----------------------");
+                                Console.WriteLine("此设备上的用户：");
+                                foreach (var item in usrList)
+                                {
+                                    Console.WriteLine(item);
+                                }
+                                Console.WriteLine("----------------------");
                                 Console.Write("输入用户名:");
                                 var usrname = Console.ReadLine();
                                 Console.Write("输入密码:");
                                 var pwd = Console.ReadLine();
                                 if (User.Login(usrname, pwd))
                                 {
-                                    Environment.Exit((int)LoginStatus.SUCCESS);
+                                    return (int)LoginStatus.SUCCESS;
                                 }
+                                return 0;
                             }
                             catch (UserException ue)
                             {
-                                Console.WriteLine(ue.Message);goto start;
+                                Console.WriteLine(ue.Message); goto start;
+
                             }
                             catch (TypeInitializationException)
                             {
@@ -68,14 +66,8 @@ namespace ClassicByte.Cucumber.App.UserManager
                             }
                             catch (Exception ee)
                             {
-                                throw new Error(ee.Message,ee.GetType().FullName);
+                                throw new Error(ee.Message, ee.GetType().FullName);
                             }
-
-                            break;
-
-                        default:
-
-                            break;
                     }
                 }
                 else
@@ -89,7 +81,7 @@ namespace ClassicByte.Cucumber.App.UserManager
                         goto start;
                     }
                 }
-
+                return (int)LoginStatus.FAILD;
             }
             catch (Error error)
             {

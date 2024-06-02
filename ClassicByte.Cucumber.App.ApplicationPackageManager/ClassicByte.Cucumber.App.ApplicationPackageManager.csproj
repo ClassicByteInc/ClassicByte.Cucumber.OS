@@ -39,16 +39,20 @@
   <ItemGroup>
     <Compile Include="Package.cs" />
     <Compile Include="Program.cs" />
+    <None Include="Temp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ClassicByte.Library.Standard">
-      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Standard.dll</HintPath>
+    <Reference Include="ClassicByte.Library.Standard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\cstd\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Standard.dll</HintPath>
     </Reference>
-    <Reference Include="ClassicByte.Library.Util">
-      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Util.dll</HintPath>
+    <Reference Include="ClassicByte.Library.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\cstd\ClassicByte.Library.Util\bin\Debug\ClassicByte.Library.Util.dll</HintPath>
     </Reference>
-    <Reference Include="ClassicByte.Standard">
-      <HintPath>..\..\..\Standard\ClassicByte.Library.Util\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
+    <Reference Include="ClassicByte.Standard, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Standard\cstd\ClassicByte.Library.Util\bin\Debug\ClassicByte.Standard.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
