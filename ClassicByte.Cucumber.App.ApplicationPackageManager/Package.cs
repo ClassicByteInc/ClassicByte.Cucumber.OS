@@ -227,46 +227,7 @@ namespace ClassicByte.Cucumber.App.ApplicationPackageManager
                 catch (Exception)
                 {
 
-                    throw;
-                }
-            }
-
-            root.AppendChild(installItems);
-            root.AppendChild(info);
-            installConfigDoc.AppendChild(root);
-            installConfigDoc.Save($"{temp}\\{_packagefile}");
-            #endregion
-
-            #region 打包
-            Directory.CreateDirectory(temp.FullName + "\\Application");
-            Directory.CreateDirectory(temp.FullName + "\\Config");
-
-            FileManager.CopyFolder(targetDir.FullName, temp.FullName + "\\Application"); ;
-            File.Copy($"{temp}\\{_packagefile}", temp.FullName + "\\Config\\install.xml", true);
-
-            #endregion
-
-            return new Package($"{outPut.FullName}\\{_packagefile}");
         }
-
-
-        static List<FileInfo> GetFileNames(string rootDir)
-        {
-            List<FileInfo> fileNames = new List<FileInfo>();
-            string[] files = Directory.GetFiles(rootDir); // 获取指定文件夹下的所有文件
-            foreach (string file in files)
-            {
-                fileNames.Add(new FileInfo(file)); // 将文件添加到List中
-            }
-            string[] subDirs = Directory.GetDirectories(rootDir); // 获取指定文件夹下的所有子文件夹
-            foreach (string subDir in subDirs)
-            {
-                fileNames.AddRange(GetFileNames(subDir)); // 递归获取子文件夹下的所有文件
-            }
-            return fileNames;
-        }
-
-
     }
 
     /// <summary>
