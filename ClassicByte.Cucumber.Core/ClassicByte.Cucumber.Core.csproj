@@ -49,6 +49,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Console.cs" />
     <Compile Include="Exceptions\Error.cs" />
     <Compile Include="Exceptions\CoreException.cs" />
     <Compile Include="Exceptions\LogonFailureException.cs" />

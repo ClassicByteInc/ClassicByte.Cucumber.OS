@@ -1,40 +1,108 @@
 ﻿using System;
+using System.IO;
 using ClassicByte.Cucumber.Core.Exceptions;
+using ClassicByte.Cucumber.Core;
+using Console = ClassicByte.Cucumber.Core.Console;
 
 namespace ClassicByte.Cucumber.App.ApplicationPackageManager
 {
     internal class Program
     {
 
-        public const String HELPSTR = @"
-install [package_path] 安装指定包
-uninstall [package_id] 卸载包
-list    列出已经安装的包
-init    关联包安装程序
-";
+        public const string HELPSTR =
+    @"此版本可用功能:
+    build [Package_Name] [Target_Folder] [outPut] [Install_Location] [Install_Main] [PackageVersion] [PackageDescription]    生成包
+    install [Target_Package] [Install_Location]                                        安装包
+    init                                                                               关联文件
+    list                                                                               列出已安装的包
+    uninstall [PackageName]                                                            卸载包
+    run [PackageName]                                                                  运行包";
 
 
         public static void Main(string[] args)
         {
+            Console.WriteLine("ClassicByte App Package Manager 软件包管理 1.0.1");
 			try
 			{
-                if (args.Length==0)
+                if (args.Length == 0)
                 {
-                    Console.WriteLine($"\n\nClassicByte Cucumber Package Manager 1.0.0.1\n{HELPSTR}");
-                    return;
+                    Console.WriteLine(HELPSTR);
                 }
-                switch (args[0].ToLower())
+                else
                 {
-                    case"build":
-                        if (args[3] ==".")
+                    try
+                    {
+                        Console.WriteLine($"将要开始的操作:{args[0]}");
+                        switch (args[0].ToLower())
                         {
+                            case "build":
+
+                                try
+                                {
+
+                                    Package.Build(
+                                        args[1],
+                                        targetDir: new DirectoryInfo(args[2]),
+                                        outPut: new DirectoryInfo(args[3]),
+                                        appMain: new FileInfo(args[5]), 
+                                        args[6], 
+                                        args[7]
+                                        );
+                                }
+                                catch (DirectoryNotFoundException e)
+                                {
+                                    Console.WriteLine(e.Message, ConsoleColor.Red);
+                                    Console.WriteLine($"生成失败:{e.Message}", ConsoleColor.Red);
+                                    //throw;
+                                }
+                                catch (FileNotFoundException e)
+                                {
+                                    Console.WriteLine(e.Message, ConsoleColor.Red);
+                                    Console.WriteLine($"生成失败:{e.Message}", ConsoleColor.Red);
+                                }
+                                break;
+                            case "install":
+                                try
+                                {
+                                    new Package(args[1]).Install(args[2]);
+                                }
+                                catch (FileNotFoundException fnfe)
+                                {
+                                    Console.WriteLine(fnfe.Message + "安装包损坏。", ConsoleColor.Red);
+                                }
+                                catch (ArgumentException ae)
+                                {
+                                    Console.WriteLine(ae.Message, ConsoleColor.Red);
+                                }
+                                break;
+                            case "help":
+                                Console.WriteLine(HELPSTR);
+                                break;
+                            case "init":
+                                Package.InitAssembly();
+                                break;
+                            case "uninstall":
+                                Package.Uninstall(args[1]);
+                                break;
+                            case "list":
+                                Console.WriteLine(Package.List());
+                                //#errorMessage
+                                break;
+                            case "download":
+                                //#errorMessage
+                                break;
+                            case "run":
+                                break;
+                            default:
+                                Console.WriteLine($"'{args[0]}'不是命令,键入 apm help 获得帮助", ConsoleColor.Red);
+                                break;
                         }
-                        Package.Build(args[1], new System.IO.DirectoryInfo(args[2]),new System.IO.DirectoryInfo(args[3]),new System.IO.FileInfo(args[4]), args[5], args[6]);   
-                        break;
-                    case "install":
-                        new Package(args[1]).Install();
-                        break;
-                    
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Console.WriteLine("命令语法不正确,键入 apm help 获得帮助");
+                        //throw;
+                    }
                 }
             }
             catch (IndexOutOfRangeException)
@@ -47,7 +115,10 @@ init    关联包安装程序
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[{e.GetType().FullName}]");
+                Console.WriteLine($"[{e.GetType().FullName}]{e.Message}");
+#if DEBUG
+                throw;
+#endif
             }
         }
     }
